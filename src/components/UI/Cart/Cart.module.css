@@ -1,0 +1,45 @@
+.Cart {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 250px;
+	flex: 1 0 30%;
+	margin-bottom: 40px;
+	margin-right: 40px;
+	background-color: #f6f6f6;
+	border-radius: 16px;
+	transition: transform 0.5s;
+	padding: 20px;
+	overflow: hidden;
+}
+.Cart div {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.Cart:hover {
+	cursor: pointer;
+	box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.04), 0 -2px 8px 0 rgba(0, 0, 0, 0.04);
+	transform: translateY(-6px);
+}
+.Cart img {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+.Cart h3 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+.Cart p {
+	position: absolute;
+	top: 70%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: justify;
+	word-break: break-all;
+	word-wrap: wrap;
+}

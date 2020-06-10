@@ -1,0 +1,14 @@
+.AddRestaurantPage {
+	display: flex;
+	justify-content: center;
+	flex-grow: 1;
+	width: 100%;
+	padding-top: 100px;
+}
+.AddRestaurantPage > div {
+	max-width: 600px;
+	width: 100%;
+}
+.AddRestaurantPage h1 {
+	text-align: center;
+}
