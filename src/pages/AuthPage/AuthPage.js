@@ -1,11 +1,9 @@
-import React, { /*useContext, useEffect,*/ useState } from "react"
-// import { useHttp } from "../../hooks/http.hook"
-// import { useMessage } from "../../hooks/message.hook"
-// import { AuthContext } from "../../context/AuthContext"
+import React, { useState } from "react"
 import classes from './AuthPage.module.css'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import is from 'is_js'
+import axios from 'axios'
 
 export const AuthPage = () => {
 	const [state, setState] = useState({
@@ -37,35 +35,31 @@ export const AuthPage = () => {
 			}
 		}
 	})
-
-
-	// const auth = useContext(AuthContext)
-	// const message = useMessage()
-	// const { loading, request, error, clearError } = useHttp()
-	// const [form, setForm] = useState({
-	// 	email: '', password: ''
-	// })
-	// useEffect(() => {
-	// 	message(error)
-	// 	clearError()
-	// }, [error, message, clearError])
-	// const changeHandler = event => {
-	// 	setForm({ ...form, [event.target.name]: event.target.value })
-	// }
-
-
-
 	const registerHandler = async () => {
-		// try {
-		// 	const data = await request('/api/auth/register', 'POST', { ...form })
-		// 	message(data.message)
-		// } catch (e) { }
+		const authData = {
+			email: state.formControls.email.value,
+			password: state.formControls.password.value,
+			returnSecureToken: true
+		}
+		try {
+			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAhXnChN06UbNjWgiv1pymVb-uJvjadlvg', authData)
+			console.log(response.data);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 	const loginHandler = async () => {
-		// try {
-		// 	const data = await request('/api/auth/login', 'POST', { ...form })
-		// 	auth.login(data.token, data.userId)
-		// } catch (e) { }
+		const authData = {
+			email: state.formControls.email.value,
+			password: state.formControls.password.value,
+			returnSecureToken: true
+		}
+		try {
+			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAhXnChN06UbNjWgiv1pymVb-uJvjadlvg', authData)
+			console.log(response.data);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 	const submitHandler = (event) => {
 		event.preventDefault()
