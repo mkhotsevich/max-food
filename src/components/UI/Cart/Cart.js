@@ -6,7 +6,7 @@ const Cart = props => {
 	return (
 		<Link to={`/${props.name.toLowerCase()}`} className={classes.Cart}>
 			<div>
-				<img />
+				<img alt={props.name}/>
 				<h3>{props.name}</h3>
 				<p>{props.description}</p>
 			</div>

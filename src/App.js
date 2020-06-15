@@ -1,25 +1,27 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import { useRoutes } from "./routes"
-import { useAuth } from "./hooks/auth.hook"
-import { AuthContext } from "./context/AuthContext"
+import { Redirect, Route, Switch } from "react-router-dom"
+import { ProfilePage } from "./pages/ProfilePage"
+import { AuthPage } from "./pages/AuthPage/AuthPage"
+import MainPage from "./pages/MainPage/MainPage"
+import { AddDishPage } from "./pages/AddDishPage/AddDishPage"
+import { AddRestaurantPage } from './pages/AddRestaurantPage/AddRestaurantPage'
+import { RestaurantPage } from './pages/RestaurantPage/RestaurantPage'
 import { Navbar } from "./components/Navbar/Navbar"
 
 function App() {
-	const { token, login, logout, userId } = useAuth()
-	const isAuthenticated = !!token
-	const routes = useRoutes(isAuthenticated)
 	return (
-		<AuthContext.Provider value={
-			{ token, login, logout, userId, isAuthenticated }
-		}>
-			<BrowserRouter>
-				<Navbar />
-				<div>
-					{routes}
-				</div>
-			</BrowserRouter>
-		</AuthContext.Provider>
+		<div>
+			<Navbar />
+			<Switch>
+				<Route path={'/'} exact component={MainPage} />
+				<Route path={'/auth'} component={AuthPage} />
+				<Route path={'/profile'} component={ProfilePage} />
+				<Route path={'/adddish'} component={AddDishPage} />
+				<Route path={'/addrestaurant'} component={AddRestaurantPage} />
+				<Route path={'/:name'} component={RestaurantPage} />
+				<Redirect to={'/'} />
+			</Switch>
+		</div>
 	)
 }
 
