@@ -18,6 +18,7 @@ const Input = props => {
 			<input
 				type={inputType}
 				id={htmlFor}
+				placeholder={props.placeholder}
 				value={props.value}
 				onChange={props.onChange}
 			>

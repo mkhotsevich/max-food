@@ -4,7 +4,7 @@ import classes from './Cart.module.css'
 
 const Cart = props => {
 	return (
-		<Link to={`/${props.name.toLowerCase()}`} className={classes.Cart}>
+		<Link to={`/restaurant/${props.id}`} className={classes.Cart}>
 			<div>
 				<img alt={props.name}/>
 				<h3>{props.name}</h3>

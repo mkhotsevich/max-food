@@ -1,0 +1,42 @@
+.Navbar {
+	display: flex;
+	width: 100%;
+	height: 50px;
+	border-bottom: 1px solid #e3e4e6;
+}
+.Navbar > div,
+.Navbar > a {
+	display: flex;
+	flex: 1;
+	border-right: 1px solid #e3e4e6;
+	align-items: center;
+	justify-content: center;
+	padding: 0 5px;
+	color: black;
+}
+.Navbar .logo {
+	font-size: 24px;
+	font-weight: 700;
+}
+.Navbar .logo i {
+	margin-bottom: 4px;
+}
+.Navbar .address {
+	flex: 5;
+}
+.Navbar .address > div {
+	width: 100%;
+	margin-bottom: 0 !important;
+}
+.Navbar input {
+	border: none !important;
+}
+.Navbar .address > i {
+	margin: 0 10px;
+	font-size: 20px;
+}
+.Navbar .profile > i,
+.Navbar .cart > i {
+	font-size: 20px;
+	margin: 0 10px 5px 10px;
+}
