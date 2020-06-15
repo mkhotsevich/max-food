@@ -27,6 +27,7 @@ const AddRestaurantPage = () => {
 		}
 	}
 	const [state, setState] = useState({
+		restaurant: {},
 		formControls: createFromControls(),
 		isFormValid: false
 	})
@@ -96,7 +97,7 @@ const AddRestaurantPage = () => {
 
 function mapStateToProps(state) {
 	return {
-
+		restaurant: state.createReducer.restaurant
 	}
 }
 function mapDispatchToProps(dispatch) {
