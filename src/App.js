@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
 import { Redirect, Route, Switch } from "react-router-dom"
-import { ProfilePage } from "./pages/ProfilePage"
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { ProfilePage } from "./pages/ProfilePage/ProfilePage"
 import AuthPage from "./pages/AuthPage/AuthPage"
 import MainPage from "./pages/MainPage/MainPage"
 import { AddDishPage } from "./pages/AddDishPage/AddDishPage"
-import AddRestaurantPage from './pages/AddRestaurantPage/AddRestaurantPage'
+import { AddRestaurantPage } from './pages/AddRestaurantPage/AddRestaurantPage'
 import { RestaurantPage } from './pages/RestaurantPage/RestaurantPage'
 import { Navbar } from "./components/Navbar/Navbar"
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import Logout from './components/Logout/Logout'
 import { autoLogin } from './store/actions/auth'
 
 export const App = () => {
+
 	const { isAuthenticated } = useSelector(state => ({
 		isAuthenticated: !!state.auth.token
 	}), shallowEqual)

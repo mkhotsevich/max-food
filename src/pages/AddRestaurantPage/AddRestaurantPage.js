@@ -1,36 +1,39 @@
 import React, { useState } from 'react'
+import { connect, useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import classes from './AddRestaurantPage.module.css'
 import Input from '../../components/UI/Input/Input'
 import { createControl, validate, validateForm } from '../../utils/form/formFramework'
 import Buttom from '../../components/UI/Button/Button'
-import { connect } from 'react-redux'
 
-const AddRestaurantPage = () => {
-	const createFromControls = () => {
-		return {
-			name: createControl({
-				type: 'text',
-				label: 'Название',
-				errorMessage: 'Введите название',
-			}, { required: true }),
-			description: createControl({
-				type: 'text',
-				label: 'Описание',
-				errorMessage: 'Описание должно быть меньше 20 символов',
-			}, { required: true, maxLength: 20 }),
-			restaurateurId: createControl({
-				type: 'text',
-				label: 'Владелец',
-				errorMessage: 'Введите владельца',
-			}, { required: true }),
-		}
+const createFromControls = () => {
+	return {
+		name: createControl({
+			type: 'text',
+			label: 'Название',
+			errorMessage: 'Введите название',
+		}, { required: true }),
+		description: createControl({
+			type: 'text',
+			label: 'Описание',
+			errorMessage: 'Описание должно быть меньше 20 символов',
+		}, { required: true, maxLength: 20 }),
+		restaurateurId: createControl({
+			type: 'text',
+			label: 'Владелец',
+			errorMessage: 'Введите владельца',
+		}, { required: true }),
 	}
+}
+
+export const AddRestaurantPage = () => {
+
 	const [state, setState] = useState({
 		restaurant: {},
 		formControls: createFromControls(),
 		isFormValid: false
 	})
+	const restaurant = useSelector(state => state.createReducer.restaurant)
 	const renderInputs = () => {
 		return Object.keys(state.formControls).map((controlName, index) => {
 			const control = state.formControls[controlName]
@@ -94,16 +97,3 @@ const AddRestaurantPage = () => {
 		</div>
 	)
 }
-
-function mapStateToProps(state) {
-	return {
-		restaurant: state.createReducer.restaurant
-	}
-}
-function mapDispatchToProps(dispatch) {
-	return {
-
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddRestaurantPage)

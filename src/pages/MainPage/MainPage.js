@@ -1,6 +1,6 @@
 import React from "react"
 import classes from './MainPage.module.css'
-import Cart from "../../components/UI/Cart/Cart"
+import { Card } from '../../components/Card/Card'
 import Loader from '../../components/UI/Loader/Loader'
 import { connect } from "react-redux"
 import { fetchRestaurants } from '../../store/actions/restaurant'
@@ -13,7 +13,7 @@ class MainPage extends React.Component {
 	renderRestaurants = () => {
 		return this.props.restaurants.map((restaurant, index) => {
 			return (
-				<Cart
+				<Card
 					key={restaurant.id + index}
 					name={restaurant.name}
 					description={restaurant.description}
