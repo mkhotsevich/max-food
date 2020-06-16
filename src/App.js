@@ -7,15 +7,22 @@ import { AddDishPage } from "./pages/AddDishPage/AddDishPage"
 import AddRestaurantPage from './pages/AddRestaurantPage/AddRestaurantPage'
 import { RestaurantPage } from './pages/RestaurantPage/RestaurantPage'
 import { Navbar } from "./components/Navbar/Navbar"
-import { connect } from 'react-redux'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import Logout from './components/Logout/Logout'
 import { autoLogin } from './store/actions/auth'
 
-function App(props) {
+export const App = () => {
+	const { isAuthenticated } = useSelector(state => ({
+		isAuthenticated: !!state.auth.token
+	}), shallowEqual)
+
+	const dispatch = useDispatch({
+		autoLogin: () => dispatch(autoLogin())
+	})
 
 	useEffect(() => {
-		props.autoLogin()
-	}, [props])
+		autoLogin()
+	}, [])
 
 	let routes = (
 		<Switch>
@@ -26,7 +33,7 @@ function App(props) {
 		</Switch>
 	)
 
-	if (props.isAuthenticated) {
+	if (isAuthenticated) {
 		routes = (
 			<Switch>
 				<Route path={'/'} exact component={MainPage} />
@@ -47,16 +54,3 @@ function App(props) {
 		</div>
 	)
 }
-
-function mapStateToProps(state) {
-	return {
-		isAuthenticated: !!state.auth.token
-	}
-}
-function mapDispatchToProps(dispatch) {
-	return {
-		autoLogin: () => dispatch(autoLogin())
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
