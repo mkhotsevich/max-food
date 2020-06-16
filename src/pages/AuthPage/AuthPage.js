@@ -3,9 +3,10 @@ import classes from './AuthPage.module.css'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import is from 'is_js'
-import axios from 'axios'
+import { connect } from "react-redux"
+import auth from '../../store/actions/auth'
 
-export const AuthPage = () => {
+const AuthPage = props => {
 	const [state, setState] = useState({
 		isFormValid: false,
 		formControls: {
@@ -35,31 +36,19 @@ export const AuthPage = () => {
 			}
 		}
 	})
-	const registerHandler = async () => {
-		const authData = {
-			email: state.formControls.email.value,
-			password: state.formControls.password.value,
-			returnSecureToken: true
-		}
-		try {
-			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAhXnChN06UbNjWgiv1pymVb-uJvjadlvg', authData)
-			console.log(response.data);
-		} catch (error) {
-			console.log(error);
-		}
+	const registerHandler = () => {
+		props.auth(
+			state.formControls.email.value,
+			state.formControls.password.value,
+			false
+		)
 	}
-	const loginHandler = async () => {
-		const authData = {
-			email: state.formControls.email.value,
-			password: state.formControls.password.value,
-			returnSecureToken: true
-		}
-		try {
-			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAhXnChN06UbNjWgiv1pymVb-uJvjadlvg', authData)
-			console.log(response.data);
-		} catch (error) {
-			console.log(error);
-		}
+	const loginHandler = () => {
+		props.auth(
+			state.formControls.email.value,
+			state.formControls.password.value,
+			true
+		)
 	}
 	const submitHandler = (event) => {
 		event.preventDefault()
@@ -132,3 +121,11 @@ export const AuthPage = () => {
 		</div>
 	)
 }
+
+function mapDispathToProps(dispatch) {
+	return {
+		auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin))
+	}
+}
+
+export default connect(null, mapDispathToProps)(AuthPage)
