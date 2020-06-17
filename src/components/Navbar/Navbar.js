@@ -28,7 +28,7 @@ export const Navbar = () => {
 								<NavLink to={'/addrestaurant'} exact={true} className="nav-link">Добавить ресторан</NavLink>
 							</li>
 							<li className="nav-item">
-								<NavLink to={'/addspeс'} exact={true} className="nav-link">Добавить специализацию</NavLink>
+								<NavLink to={'/addspec'} exact={true} className="nav-link">Cпециализации</NavLink>
 							</li>
 							<li className="nav-item">
 								<NavLink to={'/dashboard'} exact={true} className="nav-link">Дашборд</NavLink>

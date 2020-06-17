@@ -10,6 +10,7 @@ import { RestaurantPage } from './pages/RestaurantPage/RestaurantPage'
 import { Navbar } from "./components/Navbar/Navbar"
 import Logout from './components/Logout/Logout'
 import { autoLogin } from './store/actions/auth'
+import { AddSpec } from './pages/AddSpec/AddSpec'
 
 export const App = (props) => {
 
@@ -29,22 +30,21 @@ export const App = (props) => {
 			<Route path={'/'} exact component={MainPage} />
 			<Route path={'/auth'} component={AuthPage} />
 			<Route path={'/restaurant/:name'} component={RestaurantPage} />
-			<Route path={'/addrestaurant'} component={AddRestaurantPage} /> 
 			<Redirect to={'/'} />
 		</Switch>
 	)
 
 	if (isAuthenticated) {
-		console.log(isAuthenticated, isAdmin)
 		if (isAdmin) {
 			routes = (
 				<Switch>
-					<Route path={'/'} exact component={MainPage} />
 					<Route path={'/profile'} component={ProfilePage} />
 					<Route path={'/adddish'} component={AddDishPage} />
 					<Route path={'/addrestaurant'} component={AddRestaurantPage} />
+					<Route path={'/addspec'} component={AddSpec} />
 					<Route path={'/restaurant/:name'} component={RestaurantPage} />
 					<Route path={'/logout'} component={Logout} />
+					<Route path={'/'} exact component={MainPage} />
 					<Redirect to={'/'} />
 				</Switch>
 			)
