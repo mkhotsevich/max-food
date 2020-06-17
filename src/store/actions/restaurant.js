@@ -13,7 +13,8 @@ export function fetchRestaurants() {
 					id: key,
 					name: restaurant.name,
 					description: restaurant.description,
-					restaurateurId: restaurant.restaurateurId
+					restaurateurId: restaurant.restaurateurId,
+					imageURL: restaurant.imageURL
 				})
 			})
 			dispatch(fetchRestaurantsSuccess(restaurants))
