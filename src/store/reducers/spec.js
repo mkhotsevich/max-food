@@ -3,7 +3,7 @@ import {FETCH_SPECS_ERROR, FETCH_SPECS_START, FETCH_SPECS_SUCCESS} from '../acti
 const initialState = {
 	specs: [],
 	loading: true,
-	erorr: null
+	error: null
 }
 export default function specReducer(state = initialState, action) {
 	switch (action.type) {
