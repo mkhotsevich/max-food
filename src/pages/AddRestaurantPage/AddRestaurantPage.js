@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { connect, useSelector, useDispatch } from 'react-redux'
+import { connect, useSelector, useDispatch, shallowEqual } from 'react-redux'
 import axios from 'axios'
 import classes from './AddRestaurantPage.module.css'
 import Input from '../../components/UI/Input/Input'
 import { createControl, validate, validateForm } from '../../utils/form/formFramework'
 import Buttom from '../../components/UI/Button/Button'
+import Select from '../../components/UI/Select/Select'
 
 const createFromControls = () => {
 	return {
@@ -17,23 +18,31 @@ const createFromControls = () => {
 			type: 'text',
 			label: 'Описание',
 			errorMessage: 'Описание должно быть меньше 20 символов',
-		}, { required: true, maxLength: 20 }),
+		}, { required: true }),
 		restaurateurId: createControl({
 			type: 'text',
 			label: 'Владелец',
 			errorMessage: 'Введите владельца',
 		}, { required: true }),
+		imageURL: createControl({
+			type: 'text',
+			label: 'URL картинки',
+			errorMessage: 'Введите URL',
+		}, { required: true })
 	}
 }
 
 export const AddRestaurantPage = () => {
+
 
 	const [state, setState] = useState({
 		restaurant: {},
 		formControls: createFromControls(),
 		isFormValid: false
 	})
-	const restaurant = useSelector(state => state.createReducer.restaurant)
+	// const { isAuthenticated } = useSelector(state => ({
+	// 	isAuthenticated: !!state.auth.token
+	// }), shallowEqual)
 	const renderInputs = () => {
 		return Object.keys(state.formControls).map((controlName, index) => {
 			const control = state.formControls[controlName]
@@ -67,12 +76,13 @@ export const AddRestaurantPage = () => {
 			isFormValid: validateForm(formControls)
 		})
 	}
-	const AddRestaurantHandler = async () => {
+	const addRestaurantHandler = async () => {
 		try {
 			const restaurant = {
 				name: state.formControls.name.value,
 				description: state.formControls.description.value,
-				restaurateurId: state.formControls.restaurateurId.value
+				restaurateurId: state.formControls.restaurateurId.value,
+				imageURL: state.formControls.imageURL.value
 			}
 			await axios.post('https://maxfood-4cbb5.firebaseio.com/restaurants.json', restaurant)
 			setState({
@@ -83,17 +93,26 @@ export const AddRestaurantPage = () => {
 		}
 	}
 	return (
-		<div className={classes.AddRestaurantPage}>
-			<div>
-				<h1>Добавление ресторана</h1>
-				<form onSubmit={submitHandler}>
-					{renderInputs()}
-					<Buttom
-						onClick={AddRestaurantHandler}
-						disabled={!state.isFormValid}
-					>Добавить</Buttom>
-				</form>
-			</div>
+		<div className={'row'}>
+			<h1 className={'col-12 text-center mb-4 mt-4'}>Добавление ресторана</h1>
+			<form onSubmit={submitHandler} className={'col-sm-12 col-md-8 col-lg-6 mx-auto'}>
+				{renderInputs()}
+				<Select
+					label={'Специализация'}
+					value
+					options={[
+						{ value: '1'},
+						{ value: '2'},
+						{ value: '3'},
+						{ value: '4'}
+					]}
+				/>
+				<Buttom
+					onClick={addRestaurantHandler}
+					disabled={!state.isFormValid}
+				>Добавить
+					</Buttom>
+			</form>
 		</div>
 	)
 }

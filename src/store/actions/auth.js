@@ -15,25 +15,27 @@ export default function auth(email, password, isLogin) {
 		const response = await axios.post(url, authData)
 		const data = response.data
 
-		const expirationDate = new Date((new Date().getTime() + data.expiresIn) * 1000)
+		const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
 
 		localStorage.setItem('token', data.idToken)
 		localStorage.setItem('userId', data.localId)
 		localStorage.setItem('expirationDate', expirationDate)
 
-		dispatch(authSuccess(data.idToken))
+		dispatch(authSuccess(data.idToken, data.localId))
 		dispatch(autoLogout(data.expiresIn))
 	}
 }
-export function authSuccess(token) {
+export function authSuccess(token, userId) {
 	return {
 		type: AUTH_SUCCESS,
-		token
+		token,
+		userId
 	}
 }
-export function autoLogin(params) {
+export function autoLogin() {
 	return dispatch => {
 		const token = localStorage.getItem('token')
+		const userId = localStorage.getItem('userId')
 		if (!token) {
 			dispatch(logout())
 		} else {
@@ -41,7 +43,7 @@ export function autoLogin(params) {
 			if (expirationDate <= new Date()) {
 				dispatch(logout())
 			} else {
-				dispatch(authSuccess(token))
+				dispatch(authSuccess(token, userId))
 				dispatch(autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000))
 			}
 		}

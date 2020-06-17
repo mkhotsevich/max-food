@@ -3,8 +3,9 @@ import { Link, NavLink } from 'react-router-dom'
 import { useSelector, shallowEqual } from 'react-redux'
 
 export const Navbar = () => {
-	const { isAuthenticated } = useSelector(state => ({
-		isAuthenticated: !!state.auth.token
+	const { isAuthenticated, isAdmin } = useSelector(state => ({
+		isAuthenticated: !!state.auth.token,
+		isAdmin: state.auth.userId === 'rxSgS3FlNBb3kfoO630c8JvJB6O2'
 	}), shallowEqual)
 	return (
 		<nav className={'navbar navbar-expand-sm navbar-light bg-light'} >
@@ -21,6 +22,19 @@ export const Navbar = () => {
 					<li className="nav-item">
 						<NavLink to={'/'} exact={true} className="nav-link">Рестораны</NavLink>
 					</li>
+					{isAdmin &&
+						<React.Fragment>
+							<li className="nav-item">
+								<NavLink to={'/addrestaurant'} exact={true} className="nav-link">Добавить ресторан</NavLink>
+							</li>
+							<li className="nav-item">
+								<NavLink to={'/addspeс'} exact={true} className="nav-link">Добавить специализацию</NavLink>
+							</li>
+							<li className="nav-item">
+								<NavLink to={'/dashboard'} exact={true} className="nav-link">Дашборд</NavLink>
+							</li>
+						</React.Fragment>
+					}
 				</ul>
 				<ul className="navbar-nav">
 					{isAuthenticated ?

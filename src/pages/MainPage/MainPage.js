@@ -11,27 +11,31 @@ class MainPage extends React.Component {
 		this.props.fetchRestaurants()
 	}
 	renderRestaurants = () => {
-		return this.props.restaurants.map((restaurant, index) => {
+		return this.props.restaurants.map((restaurant) => {
+			console.log(restaurant)
 			return (
-				<Card
-					key={restaurant.id + index}
-					name={restaurant.name}
-					description={restaurant.description}
-					id={restaurant.id}
-				/>
+				<div
+					className={'col-sm-4'}
+					key={restaurant.id}
+				>
+					<Card
+						imageURL={restaurant.imageURL}
+						name={restaurant.name}
+						description={restaurant.description}
+						id={restaurant.id}
+					/>
+				</div>
 			)
 		})
 	}
 	render() {
 		return (
 			<div className={classes.MainPage} >
-				<div>
-					<h1>Рестораны</h1>
-					{this.props.loading && this.props.restaurants.length === 0 ?
+				<h1 className={'text-center mt-4 mb-4'}>Рестораны</h1>
+				<div className={'row'}>
+					{this.props.loading || this.props.restaurants.length === 0 ?
 						<div className={classes.LoaderWrap}><Loader /></div> :
-						<div className={classes.restaurants}>
-							{this.renderRestaurants()}
-						</div>}
+						this.renderRestaurants()}
 				</div>
 			</div>
 		)

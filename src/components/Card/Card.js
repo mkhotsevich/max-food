@@ -1,16 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import classes from './Card.module.css'
 
 export const Card = props => (
 	<Link
 		to={`/restaurant/${props.name}`}
-		className={classes.Card}
+		className={'card mb-4'}
 	>
-		<div>
-			<img src={props.imageUrl} alt={props.name} />
-			<h3>{props.name}</h3>
-			<p>{props.description}</p>
+		<img
+			src={props.imageURL}
+			alt={props.name}
+			className={'card-img-top'}
+			style={{ height: '200px'}}
+		/>
+		<div className="card-body">
+			<h5 class="card-title">{props.name}</h5>
+			<h6 class="card-subtitle mb-2 text-muted">{props.type}</h6>
+			<p className="card-text">
+				{props.description}
+			</p>
 		</div>
 	</Link>
 )
