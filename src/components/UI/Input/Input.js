@@ -21,6 +21,7 @@ const Input = props => {
 				placeholder={props.placeholder}
 				value={props.value}
 				onChange={props.onChange}
+				disabled={props.disabled}
 			>
 			</input>
 			{isInvalid(props) ? <span>{props.errorMessage}</span> : null}

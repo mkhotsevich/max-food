@@ -12,7 +12,6 @@ class MainPage extends React.Component {
 	}
 	renderRestaurants = () => {
 		return this.props.restaurants.map((restaurant) => {
-			console.log(restaurant)
 			return (
 				<div
 					className={'col-sm-4'}

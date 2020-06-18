@@ -1,4 +1,5 @@
 import axios from 'axios'
+import axiosBase from '../../axios/axios'
 import { AUTH_SUCCESS, AUTH_LOGOUT } from './actionTypes'
 
 export default function auth(email, password, isLogin) {
@@ -14,6 +15,13 @@ export default function auth(email, password, isLogin) {
 		}
 		const response = await axios.post(url, authData)
 		const data = response.data
+		if (!isLogin) {
+			const user = {
+				userId: data.localId,
+				email: email
+			}
+			await axiosBase.post('/users.json', user)
+		}
 
 		const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
 
