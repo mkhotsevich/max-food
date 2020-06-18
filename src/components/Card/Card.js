@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const Card = props => (
 	<Link
-		to={`/restaurant/${props.name}`}
+		to={`/restaurant/${props.id}`}
 		className={'card mb-4'}
 	>
 		<img
