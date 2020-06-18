@@ -3,7 +3,7 @@ import { createControl, validate, validateForm } from '../../utils/form/formFram
 import Input from '../../components/UI/Input/Input'
 import Buttom from '../../components/UI/Button/Button'
 import { useSelector, shallowEqual, useDispatch } from 'react-redux'
-import { fetchUserById, fetchUsers } from '../../store/actions/user'
+import { fetchUsers } from '../../store/actions/user'
 
 
 const createFromControls = () => {
@@ -67,7 +67,7 @@ export const ProfilePage = props => {
 		})
 	}
 	const renderInputs = () => {
-		const user = findUser(userId, users)
+		findUser(userId, users)
 		return Object.keys(state.formControls).map((controlName, index) => {
 			const control = state.formControls[controlName]
 			return (

@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { connect, useSelector, useDispatch, shallowEqual } from 'react-redux'
 import axios from 'axios'
-import classes from './AddRestaurantPage.module.css'
 import Input from '../../components/UI/Input/Input'
 import { createControl, validate, validateForm } from '../../utils/form/formFramework'
 import Buttom from '../../components/UI/Button/Button'

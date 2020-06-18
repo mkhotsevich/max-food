@@ -13,8 +13,8 @@ export const Card = props => (
 			style={{ height: '200px'}}
 		/>
 		<div className="card-body">
-			<h5 class="card-title">{props.name}</h5>
-			<h6 class="card-subtitle mb-2 text-muted">{props.type}</h6>
+			<h5 className="card-title">{props.name}</h5>
+			<h6 className="card-subtitle mb-2 text-muted">{props.type}</h6>
 			<p className="card-text">
 				{props.description}
 			</p>
