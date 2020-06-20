@@ -2,12 +2,12 @@ import React, { Fragment, useState, useEffect } from 'react'
 import Input from '../../components/UI/Input/Input'
 import Buttom from '../../components/UI/Button/Button'
 import Loader from '../../components/UI/Loader/Loader'
-import { createControl, validate, validateForm } from '../../utils/form/formFramework'
 import axios from '../../axios/axios'
+import { createControl, validate, validateForm } from '../../utils/form/formFramework'
 import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import fetchSpecs from '../../store/actions/spec'
 
-export const AddSpec = props => {
+const Specs = props => {
 	const createFromControls = () => {
 		return {
 			name: createControl({
@@ -45,9 +45,7 @@ export const AddSpec = props => {
 			isFormValid: validateForm(formControls)
 		})
 	}
-	const submitHandler = event => {
-		event.preventDefault()
-	}
+	
 	const addSpecHandler = async () => {
 		try {
 			const spec = {
@@ -97,13 +95,16 @@ export const AddSpec = props => {
 		}
 
 	}
+	const submitHandler = event => {
+		event.preventDefault()
+	}
 	return (
 		<Fragment>
 			<div className={'row'}>
-				<h1 className={'col-12 text-center mb-4 mt-4'}>Cпециализация ресторанов</h1>
+				<h1 className={'col-12 text-center mb-3 mt-5'}>Cпециализация ресторанов</h1>
 			</div>
 			<div className={'row'}>
-				<h2 className={'col-12 text-center mb-4 mt-4'}>Добавить специализацию</h2>
+				<h2 className={'col-12 text-center mb-3 mt-3'}>Добавить специализацию</h2>
 			</div>
 			<form onSubmit={submitHandler}>
 				<div className={'row'}>
@@ -133,7 +134,6 @@ export const AddSpec = props => {
 			<div className={'row'}>
 				<h2 className={'col-12 text-center mb-4 mt-4'}>Специализации</h2>
 			</div>
-
 			{loading ?
 				<div className={'row'}>
 					<div className={'col-12 text-center'}>
@@ -144,3 +144,5 @@ export const AddSpec = props => {
 		</Fragment >
 	)
 }
+
+export default Specs

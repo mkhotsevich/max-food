@@ -23,7 +23,7 @@ export default function restaurantReducer(state = initialState, action) {
 			return {
 				...state,
 				loading: false,
-				error: action.error 
+				error: action.error
 			}
 		default:
 			return state
