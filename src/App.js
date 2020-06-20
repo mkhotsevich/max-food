@@ -7,7 +7,7 @@ import MainPage from "./pages/MainPage/MainPage"
 import { AddDishPage } from "./pages/AddDishPage/AddDishPage"
 import Rests from './pages/admin/Rests'
 import Specs from './pages/admin/Specs'
-import MenuType from './pages/admin/MenuType'
+import MenuTypes from './pages/admin/MenuTypes'
 import Orders from './pages/admin/Orders'
 import Dashboard from './pages/admin/Dashboard'
 import { RestaurantPage } from './pages/RestaurantPage/RestaurantPage'
@@ -44,7 +44,7 @@ export const App = (props) => {
 				<Switch>
 					<Route path={'/admin/rests'} component={Rests} />
 					<Route path={'/admin/specs'} component={Specs} />
-					<Route path={'/admin/menutype'} component={MenuType} />
+					<Route path={'/admin/menutype'} component={MenuTypes} />
 					<Route path={'/admin/orders'} component={Orders} />
 					<Route path={'/admin/dashboard'} component={Dashboard} />
 					<Route path={'/logout'} component={Logout} />

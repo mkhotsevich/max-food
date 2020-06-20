@@ -22,7 +22,7 @@ export default function specReducer(state = initialState, action) {
 			return {
 				...state,
 				loading: false,
-				specs: action.error
+				error: action.error
 			}
 		default:
 			return state
