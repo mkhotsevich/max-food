@@ -1,11 +1,12 @@
-import React, { useState, Fragment } from 'react'
-import axios from 'axios'
+import React, { useState, Fragment, useEffect } from 'react'
 import Input from '../../components/UI/Input/Input'
 import { createControl, validate, validateForm } from '../../utils/form/formFramework'
 import Buttom from '../../components/UI/Button/Button'
 import Select from '../../components/UI/Select/Select'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import fecthSpecs from '../../store/actions/spec'
+import { createRest, fetchRestaurants, deleteRest } from '../../store/actions/restaurant'
+import Loader from '../../components/UI/Loader/Loader'
 
 const createFromControls = () => {
 	return {
@@ -19,31 +20,50 @@ const createFromControls = () => {
 			label: 'Описание',
 			errorMessage: 'Введите описание',
 		}, { required: true }),
-		restaurateurId: createControl({
+		INN: createControl({
+			type: 'number',
+			label: 'ИНН',
+			errorMessage: 'Некорректный ИНН',
+		}, { required: true, length: 10 }),
+		OGRN: createControl({
+			type: 'number',
+			label: 'ОГРН',
+			errorMessage: 'Некорректный ОГРН',
+		}, { required: true, length: 12 }),
+		address: createControl({
 			type: 'text',
-			label: 'Владелец',
-			errorMessage: 'Введите владельца',
-		}, { required: true }),
+			label: 'Адрес',
+			errorMessage: '',
+		}, { }),
 		imageURL: createControl({
 			type: 'text',
 			label: 'URL картинки',
 			errorMessage: 'Введите URL',
+		}, { required: true }),
+		owner: createControl({
+			type: 'text',
+			label: 'Владелец',
+			errorMessage: 'Введите владельца',
 		}, { required: true })
 	}
 }
 
 const Rests = () => {
 	const [state, setState] = useState({
-		restaurant: {},
 		formControls: createFromControls(),
-		isFormValid: false
+		isFormValid: false,
+		spec: ''
 	})
-	const { specs } = useSelector(state => ({
-		specs: state.specs.specs
+	const { specs, loading, rests } = useSelector(state => ({
+		specs: state.specs.specs,
+		loading: state.restaurants.loading,
+		rests: state.restaurants.restaurants
 	}), shallowEqual)
 	const dispatch = useDispatch()
-	dispatch(fecthSpecs())
-
+	useEffect(() => {
+		dispatch(fecthSpecs())
+		dispatch(fetchRestaurants())
+	}, [dispatch])
 	const renderInputs = () => {
 		return Object.keys(state.formControls).map((controlName, index) => {
 			const control = state.formControls[controlName]
@@ -78,22 +98,62 @@ const Rests = () => {
 		})
 	}
 	const addRestaurantHandler = async () => {
+		const restaurant = {
+			name: state.formControls.name.value,
+			description: state.formControls.description.value,
+			INN: state.formControls.INN.value,
+			OGRN: state.formControls.OGRN.value,
+			address: state.formControls.address.value,
+			owner: state.formControls.owner.value,
+			imageURL: state.formControls.imageURL.value,
+			spec: state.spec
+		}
+		dispatch(createRest(restaurant))
+		setState({
+			formControls: createFromControls(),
+			isFormValid: false
+		})
+	}
+	const selectChangeHandler = event => {
+		setState({
+			...state,
+			spec: event.target.value
+		})
+	}
+	const renderRests = () => {
 		try {
-			const restaurant = {
-				name: state.formControls.name.value,
-				description: state.formControls.description.value,
-				restaurateurId: state.formControls.restaurateurId.value,
-				imageURL: state.formControls.imageURL.value
-			}
-			await axios.post('https://maxfood-4cbb5.firebaseio.com/restaurants.json', restaurant)
-			setState({
-				formControls: createFromControls(),
+			return rests.map((rest) => {
+				return (
+					<div className={'row'} key={rest.id}>
+						<div className={'col-sm-12 col-md-8 col-lg-6 mx-auto mb-2 d-flex justify-content-between'}>
+							<span>{rest.name}</span>
+							<button
+								style={{
+									outline: 'none',
+									background: 'none',
+									border: 'none'
+								}}
+								onClick={() => deleteHandler(rest)}
+							>
+								&#65794;
+						</button>
+						</div>
+					</div>
+				)
 			})
 		} catch (error) {
 			console.log(error)
 		}
 	}
-	console.log(specs)
+	const deleteHandler = rest => {
+		dispatch(deleteRest(rest))
+	}
+	const select = <Select
+		label={'Специализация'}
+		onChange={selectChangeHandler}
+		value={state.spec}
+		options={specs}
+	/>
 	return (
 		<Fragment>
 			<div className={'row'}>
@@ -102,23 +162,30 @@ const Rests = () => {
 			<div className={'row'}>
 				<h2 className={'col-12 text-center mb-3 mt-3'}>Добавить ресторан</h2>
 			</div>
+			<div className={'row'}>
+				<form onSubmit={submitHandler} className={'col-sm-12 col-md-8 col-lg-6 mx-auto'}>
+					{renderInputs()}
+					{select}
+					<Buttom
+						onClick={addRestaurantHandler}
+						disabled={!state.isFormValid}
+					>Добавить
+					</Buttom>
+				</form>
+			</div>
+			<div className={'row'}>
+				<h2 className={'col-12 text-center mb-4 mt-4'}>Список ресторанов</h2>
+			</div>
+			{loading ?
+				<div className={'row'}>
+					<div className={'col-12 text-center'}>
+						<Loader />
+					</div>
+				</div> :
+				renderRests()
+			}
 		</Fragment>
-		// <div className={'row'}>
-		// 	<h1 className={'col-12 text-center mb-3 mt-5'}>Добавление ресторана</h1>
-		// 	<form onSubmit={submitHandler} className={'col-sm-12 col-md-8 col-lg-6 mx-auto'}>
-		// 		{renderInputs()}
-		// 		<Select
-		// 			label={'Специализация'}
-		// 			value={'Specs'}
-		// 			options={specs}
-		// 		/>
-		// 		<Buttom
-		// 			onClick={addRestaurantHandler}
-		// 			disabled={!state.isFormValid}
-		// 		>Добавить
-		// 			</Buttom>
-		// 	</form>
-		// </div>
+		
 	)
 }
 

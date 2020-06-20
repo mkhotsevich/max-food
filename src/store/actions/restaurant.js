@@ -1,6 +1,26 @@
 import axios from '../../axios/axios'
 import { FETCH_RESTAURANTS_START, FETCH_RESTAURANTS_SUCCESS, FETCH_RESTAURANTS_ERROR } from './actionTypes'
 
+export function createRest(rest) {
+	return async dispatch => {
+		try {
+			await axios.post('/restaurants.json', rest)
+
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
+export function deleteRest(rest) {
+	return async dispatch => {
+		try {
+			await axios.delete(`/restaurants/${rest.id}.json`)
+			dispatch(fetchRestaurants())
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
 export function fetchRestaurants() {
 	return async dispatch => {
 		dispatch(fetchRestaurantsStart())
