@@ -4,20 +4,16 @@ import { Link } from 'react-router-dom'
 export const Card = props => (
 	<Link
 		to={`/restaurant/${props.id}`}
-		className={'card mb-4'}
+		className={'card mb-4 text-decoration-none text-body'}
 	>
 		<img
 			src={props.imageURL}
 			alt={props.name}
-			className={'card-img-top'}
-			style={{ height: '200px'}}
+			style={{ height: '200px', margin: '10px auto auto auto'}}
 		/>
 		<div className="card-body">
-			<h5 className="card-title">{props.name}</h5>
+			<h3 className="card-title text-center">{props.name}</h3>
 			<h6 className="card-subtitle mb-2 text-muted">{props.type}</h6>
-			<p className="card-text">
-				{props.description}
-			</p>
 		</div>
 	</Link>
 )
