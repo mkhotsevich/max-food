@@ -7,7 +7,7 @@ import axios from '../../axios/axios'
 import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import fetchSpecs from '../../store/actions/spec'
 
-export const AddSpec = props => {
+const Specs = props => {
 	const createFromControls = () => {
 		return {
 			name: createControl({
@@ -100,10 +100,10 @@ export const AddSpec = props => {
 	return (
 		<Fragment>
 			<div className={'row'}>
-				<h1 className={'col-12 text-center mb-4 mt-4'}>Cпециализация ресторанов</h1>
+				<h1 className={'col-12 text-center mb-3 mt-5'}>Cпециализация ресторанов</h1>
 			</div>
 			<div className={'row'}>
-				<h2 className={'col-12 text-center mb-4 mt-4'}>Добавить специализацию</h2>
+				<h2 className={'col-12 text-center mb-3 mt-3'}>Добавить специализацию</h2>
 			</div>
 			<form onSubmit={submitHandler}>
 				<div className={'row'}>
@@ -144,3 +144,5 @@ export const AddSpec = props => {
 		</Fragment >
 	)
 }
+
+export default Specs
