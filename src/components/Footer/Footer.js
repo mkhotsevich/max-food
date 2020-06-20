@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
 	return (
-		<footer className={'footer mt-auto py-3 bg-light'}>
+		<footer className={'footer py-3 bg-light mt-3'}>
 			<div className={'container'}>
 				<span className={'text-muted'}>
 					Сделано Максим Хоцевичем<br />
