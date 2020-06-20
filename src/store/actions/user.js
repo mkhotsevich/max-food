@@ -5,8 +5,10 @@ import {
 	FETCH_USER_ERROR,
 	FETCH_USERS_START,
 	FETCH_USERS_SUCCESS,
-	FETCH_USERS_ERROR
+	FETCH_USERS_ERROR,
+	IS_OWNER
 } from './actionTypes'
+import { fetchRestaurants } from './restaurant'
 
 //USER
 export function fetchUserById(id) {
@@ -81,5 +83,28 @@ export function fetchUsersError(error) {
 	return {
 		type: FETCH_USERS_ERROR,
 		error
+	}
+}
+
+export function checkOwner() {
+	return async (dispatch, getState) => {
+		await dispatch(fetchRestaurants())
+		await dispatch(fetchUsers())
+		const rests = getState().restaurants.restaurants
+		const users = getState().user.users
+		const userId = localStorage.getItem('userId')
+		Object.values(rests).forEach(rest => {
+			Object.values(users).forEach(user => {
+				if (rest.owner === user.email && user.userId === userId) {
+					dispatch(searchOwnerSucces(true))
+				}
+			})
+		})
+	}
+}
+export function searchOwnerSucces(isOwner) {
+	return {
+		type: IS_OWNER,
+		owner: isOwner
 	}
 }

@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { useSelector, shallowEqual } from 'react-redux'
+import { useSelector, shallowEqual, useDispatch } from 'react-redux'
+import { checkOwner } from '../../store/actions/user'
 
 export const Navbar = () => {
-	const { isAuthenticated, isAdmin } = useSelector(state => ({
+	const { isAuthenticated, isAdmin, isOwner} = useSelector(state => ({
 		isAuthenticated: !!state.auth.token,
 		isAdmin: state.auth.userId === 'rxSgS3FlNBb3kfoO630c8JvJB6O2',
-		user: state.user.user
+		isOwner: state.user.owner
 	}), shallowEqual)
+	const dispatch = useDispatch()
+	useEffect(() => {
+		dispatch(checkOwner())
+	}, [dispatch])
+
 	return (
 		<nav className={'navbar navbar-expand-sm navbar-light bg-light fixed-top'} >
 			<Link to={'/'} className={'navbar-brand'}>MaxFood</Link>
@@ -19,7 +25,6 @@ export const Navbar = () => {
 			</button>
 			<div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
 				<ul className="navbar-nav">
-					
 					{isAdmin ?
 						<React.Fragment>
 							<li className="nav-item">
@@ -39,16 +44,16 @@ export const Navbar = () => {
 							</li>
 						</React.Fragment>
 						:
-						// user.type === 'owner' ?
-						// 	<React.Fragment>
-						// 		<li className="nav-item">
-						// 			<NavLink to={'/'} exact={true} className="nav-link">Рестораны</NavLink>
-						// 		</li>
-						// 		<li className="nav-item">
-						// 			<NavLink to={'/'} exact={true} className="nav-link">Добавить пункт меню</NavLink>
-						// 		</li>
-						// 	</React.Fragment>
-						// 	:
+						isOwner ?
+							<React.Fragment>
+								<li className="nav-item">
+									<NavLink to={'/'} exact={true} className="nav-link">Рестораны</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink to={'/'} exact={true} className="nav-link">Добавить пункт меню </NavLink>
+								</li>
+							</React.Fragment>
+							:
 							<li className="nav-item">
 								<NavLink to={'/'} exact={true} className="nav-link">Рестораны</NavLink>
 							</li>
@@ -61,13 +66,13 @@ export const Navbar = () => {
 								<li className="nav-item">
 									<NavLink to={'/cart'} className="nav-link">Корзина: 1000 ₽</NavLink>
 								</li>
-							<li className="nav-item">
-								<NavLink to={'/profile'} className="nav-link">Профиль</NavLink>
-							</li>
-							<li className="nav-item">
-								<NavLink to={'/logout'} className="nav-link">Выйти</NavLink>
-							</li>
-						</React.Fragment>
+								<li className="nav-item">
+									<NavLink to={'/profile'} className="nav-link">Профиль</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink to={'/logout'} className="nav-link">Выйти</NavLink>
+								</li>
+							</React.Fragment>
 							:
 							<React.Fragment>
 								<li className="nav-item">

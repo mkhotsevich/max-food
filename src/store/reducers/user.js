@@ -4,14 +4,15 @@ import {
 	FETCH_USER_ERROR,
 	FETCH_USERS_START,
 	FETCH_USERS_SUCCESS,
-	FETCH_USERS_ERROR
+	FETCH_USERS_ERROR,
+	IS_OWNER,
 } from '../actions/actionTypes'
 
 const initialState = {
 	users: [],
-	user: null,
 	error: null,
-	loading: false
+	loading: false,
+	owner: false
 }
 export default function userReducer(state = initialState, action) {
 	switch (action.type) {
@@ -48,6 +49,11 @@ export default function userReducer(state = initialState, action) {
 				...state,
 				loading: false,
 				error: action.error
+			}
+		case IS_OWNER:
+			return {
+				...state,
+				owner: action.owner
 			}
 		default:
 			return state
