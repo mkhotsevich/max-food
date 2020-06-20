@@ -7,6 +7,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import fecthSpecs from '../../store/actions/spec'
 import { createRest, fetchRestaurants, deleteRest } from '../../store/actions/restaurant'
 import Loader from '../../components/UI/Loader/Loader'
+import { fetchUsers } from '../../store/actions/user'
 
 const createFromControls = () => {
 	return {
@@ -39,11 +40,6 @@ const createFromControls = () => {
 			type: 'text',
 			label: 'URL картинки',
 			errorMessage: 'Введите URL',
-		}, { required: true }),
-		owner: createControl({
-			type: 'text',
-			label: 'Владелец',
-			errorMessage: 'Введите владельца',
 		}, { required: true })
 	}
 }
@@ -52,17 +48,20 @@ const Rests = () => {
 	const [state, setState] = useState({
 		formControls: createFromControls(),
 		isFormValid: false,
-		spec: ''
+		spec: '',
+		owner: ''
 	})
-	const { specs, loading, rests } = useSelector(state => ({
+	const { specs, loading, rests, users } = useSelector(state => ({
 		specs: state.specs.specs,
 		loading: state.restaurants.loading,
-		rests: state.restaurants.restaurants
+		rests: state.restaurants.restaurants,
+		users: state.user.users
 	}), shallowEqual)
 	const dispatch = useDispatch()
 	useEffect(() => {
 		dispatch(fecthSpecs())
 		dispatch(fetchRestaurants())
+		dispatch(fetchUsers())
 	}, [dispatch])
 	const renderInputs = () => {
 		return Object.keys(state.formControls).map((controlName, index) => {
@@ -104,7 +103,7 @@ const Rests = () => {
 			INN: state.formControls.INN.value,
 			OGRN: state.formControls.OGRN.value,
 			address: state.formControls.address.value,
-			owner: state.formControls.owner.value,
+			owner: state.owner,
 			imageURL: state.formControls.imageURL.value,
 			spec: state.spec
 		}
@@ -115,10 +114,16 @@ const Rests = () => {
 			isFormValid: false
 		})
 	}
-	const selectChangeHandler = event => {
+	const selectTypeChangeHandler = event => {
 		setState({
 			...state,
 			spec: event.target.value
+		})
+	}
+	const selectOwnerChangeHandler = event => {
+		setState({
+			...state,
+			owner: event.target.value
 		})
 	}
 	const renderRests = () => {
@@ -149,11 +154,17 @@ const Rests = () => {
 	const deleteHandler = rest => {
 		dispatch(deleteRest(rest))
 	}
-	const select = <Select
+	const selectType = <Select
 		label={'Специализация'}
-		onChange={selectChangeHandler}
+		onChange={selectTypeChangeHandler}
 		value={state.spec}
 		options={specs}
+	/>
+	const selectOwner = <Select
+		label={'Владелец'}
+		onChange={selectOwnerChangeHandler}
+		value={state.owner}
+		options={users}
 	/>
 	return (
 		<Fragment>
@@ -166,7 +177,8 @@ const Rests = () => {
 			<div className={'row'}>
 				<form onSubmit={submitHandler} className={'col-sm-12 col-md-8 col-lg-6 mx-auto'}>
 					{renderInputs()}
-					{select}
+					{selectOwner}
+					{selectType}
 					<Buttom
 						onClick={addRestaurantHandler}
 						disabled={!state.isFormValid}

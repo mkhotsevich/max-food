@@ -14,10 +14,10 @@ const Select = props => {
 				{props.options.map((option, index) => {
 					return (
 						<option
-							value={option.name}
-							key={option.name + index}
+							value={option.name || option.email}
+							key={(option.name || option.email) + index}
 						>
-							{option.name}
+							{option.name || option.email}
 						</option>
 					)
 				})}
