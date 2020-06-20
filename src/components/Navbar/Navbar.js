@@ -3,12 +3,13 @@ import { Link, NavLink } from 'react-router-dom'
 import { useSelector, shallowEqual } from 'react-redux'
 
 export const Navbar = () => {
-	const { isAuthenticated, isAdmin } = useSelector(state => ({
+	const { isAuthenticated, isAdmin, user } = useSelector(state => ({
 		isAuthenticated: !!state.auth.token,
-		isAdmin: state.auth.userId === 'rxSgS3FlNBb3kfoO630c8JvJB6O2'
+		isAdmin: state.auth.userId === 'rxSgS3FlNBb3kfoO630c8JvJB6O2',
+		user: state.user.user
 	}), shallowEqual)
 	return (
-		<nav className={'navbar navbar-expand-sm navbar-light bg-light'} >
+		<nav className={'navbar navbar-expand-sm navbar-light bg-light fixed-top'} >
 			<Link to={'/'} className={'navbar-brand'}>MaxFood</Link>
 			<button
 				className={'navbar-toggler'} type="button"
@@ -16,49 +17,71 @@ export const Navbar = () => {
 				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span className="navbar-toggler-icon"></span>
 			</button>
-
 			<div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
 				<ul className="navbar-nav">
-					<li className="nav-item">
-						<NavLink to={'/'} exact={true} className="nav-link">Рестораны</NavLink>
-					</li>
-					{isAdmin &&
+					
+					{isAdmin ?
 						<React.Fragment>
 							<li className="nav-item">
-								<NavLink to={'/addrestaurant'} exact={true} className="nav-link">Добавить ресторан</NavLink>
+								<NavLink to={'/admin/rests'} exact={true} className="nav-link">Рестораны</NavLink>
 							</li>
 							<li className="nav-item">
-								<NavLink to={'/addspec'} exact={true} className="nav-link">Cпециализации</NavLink>
+								<NavLink to={'/admin/specs'} exact={true} className="nav-link">Cпециализации</NavLink>
 							</li>
 							<li className="nav-item">
-								<NavLink to={'/dashboard'} exact={true} className="nav-link">Дашборд</NavLink>
+								<NavLink to={'/admin/menutype'} exact={true} className="nav-link">Типы пунктов меню</NavLink>
+							</li>
+							<li className="nav-item">
+								<NavLink to={'/admin/orders'} exact={true} className="nav-link">Заказы</NavLink>
+							</li>
+							<li className="nav-item">
+								<NavLink to={'/admin/dashboard'} exact={true} className="nav-link">Дашборд</NavLink>
 							</li>
 						</React.Fragment>
+						:
+						// user.type === 'owner' ?
+						// 	<React.Fragment>
+						// 		<li className="nav-item">
+						// 			<NavLink to={'/'} exact={true} className="nav-link">Рестораны</NavLink>
+						// 		</li>
+						// 		<li className="nav-item">
+						// 			<NavLink to={'/'} exact={true} className="nav-link">Добавить пункт меню</NavLink>
+						// 		</li>
+						// 	</React.Fragment>
+						// 	:
+							<li className="nav-item">
+								<NavLink to={'/'} exact={true} className="nav-link">Рестораны</NavLink>
+							</li>
 					}
 				</ul>
 				<ul className="navbar-nav">
-					{isAuthenticated ?
-						<li className="nav-item dropdown">
-							<span
-								className="nav-link dropdown-toggle" id="navbarDropdown"
-								role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Профиль
-							</span>
-							<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-								<NavLink to={'/profile'} className="dropdown-item">Личные данные</NavLink>
-								<NavLink to={'/orders'} className="dropdown-item">Заказы</NavLink>
-								<div className="dropdown-divider"></div>
-								<Link to={'/logout'} className="dropdown-item">Выйти</Link>
-							</div>
-						</li>
+					{!isAdmin ?
+						isAuthenticated ?
+							<React.Fragment>
+								<li className="nav-item">
+									<NavLink to={'/cart'} className="nav-link">Корзина: 1000 ₽</NavLink>
+								</li>
+							<li className="nav-item">
+								<NavLink to={'/profile'} className="nav-link">Профиль</NavLink>
+							</li>
+							<li className="nav-item">
+								<NavLink to={'/logout'} className="nav-link">Выйти</NavLink>
+							</li>
+						</React.Fragment>
+							:
+							<React.Fragment>
+								<li className="nav-item">
+									<NavLink to={'/cart'} className="nav-link">Корзина: 1000 ₽</NavLink>
+								</li>
+								<li className="nav-item">
+									<NavLink to={'/auth'} className="nav-link">Авторизация</NavLink>
+								</li>
+							</React.Fragment>
 						:
 						<li className="nav-item">
-							<NavLink to={'/auth'} className="nav-link">Авторизация</NavLink>
+							<NavLink to={'/logout'} className="nav-link">Выйти</NavLink>
 						</li>
 					}
-					<li className="nav-item">
-						<NavLink to={'/cart'} className="nav-link">Корзина: 1000 ₽</NavLink>
-					</li>
 				</ul>
 			</div>
 		</nav>
