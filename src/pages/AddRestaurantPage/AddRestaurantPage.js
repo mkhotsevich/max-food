@@ -4,6 +4,8 @@ import Input from '../../components/UI/Input/Input'
 import { createControl, validate, validateForm } from '../../utils/form/formFramework'
 import Buttom from '../../components/UI/Button/Button'
 import Select from '../../components/UI/Select/Select'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import fecthSpecs from '../../store/actions/spec'
 
 const createFromControls = () => {
 	return {
@@ -15,7 +17,7 @@ const createFromControls = () => {
 		description: createControl({
 			type: 'text',
 			label: 'Описание',
-			errorMessage: 'Описание должно быть меньше 20 символов',
+			errorMessage: 'Введите описание',
 		}, { required: true }),
 		restaurateurId: createControl({
 			type: 'text',
@@ -31,16 +33,17 @@ const createFromControls = () => {
 }
 
 export const AddRestaurantPage = () => {
-
-
 	const [state, setState] = useState({
 		restaurant: {},
 		formControls: createFromControls(),
 		isFormValid: false
 	})
-	// const { isAuthenticated } = useSelector(state => ({
-	// 	isAuthenticated: !!state.auth.token
-	// }), shallowEqual)
+	const { specs } = useSelector(state => ({
+		specs: state.specs.specs
+	}), shallowEqual)
+	const dispatch = useDispatch()
+	dispatch(fecthSpecs())
+
 	const renderInputs = () => {
 		return Object.keys(state.formControls).map((controlName, index) => {
 			const control = state.formControls[controlName]
@@ -90,6 +93,7 @@ export const AddRestaurantPage = () => {
 			console.log(error)
 		}
 	}
+	console.log(specs)
 	return (
 		<div className={'row'}>
 			<h1 className={'col-12 text-center mb-4 mt-4'}>Добавление ресторана</h1>
@@ -97,13 +101,8 @@ export const AddRestaurantPage = () => {
 				{renderInputs()}
 				<Select
 					label={'Специализация'}
-					value
-					options={[
-						{ value: '1'},
-						{ value: '2'},
-						{ value: '3'},
-						{ value: '4'}
-					]}
+					value={'Specs'}
+					options={specs}
 				/>
 				<Buttom
 					onClick={addRestaurantHandler}
