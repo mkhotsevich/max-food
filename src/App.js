@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom"
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { ProfilePage } from "./pages/ProfilePage/ProfilePage"
 import AuthPage from "./pages/AuthPage/AuthPage"
-import MainPage from "./pages/MainPage/MainPage"
+import MainPage from "./pages/Main/MainPage"
 import Rests from './pages/admin/Rests'
 import Specs from './pages/admin/Specs'
 import MenuTypes from './pages/admin/MenuTypes'

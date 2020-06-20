@@ -3,7 +3,7 @@ import { FETCH_RESTAURANTS_START, FETCH_RESTAURANTS_SUCCESS, FETCH_RESTAURANTS_E
 const initialState = {
 	restaurants: [],
 	loading: false,
-	error: null
+	error: null,
 }
 
 export default function restaurantReducer(state = initialState, action) {
