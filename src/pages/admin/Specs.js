@@ -134,7 +134,6 @@ const Specs = props => {
 			<div className={'row'}>
 				<h2 className={'col-12 text-center mb-4 mt-4'}>Специализации</h2>
 			</div>
-
 			{loading ?
 				<div className={'row'}>
 					<div className={'col-12 text-center'}>
