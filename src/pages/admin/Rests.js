@@ -109,6 +109,7 @@ const Rests = () => {
 			spec: state.spec
 		}
 		dispatch(createRest(restaurant))
+		dispatch(fetchRestaurants())
 		setState({
 			formControls: createFromControls(),
 			isFormValid: false

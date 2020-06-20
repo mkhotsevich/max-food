@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useSelector, shallowEqual } from 'react-redux'
 
 export const Navbar = () => {
-	const { isAuthenticated, isAdmin, user } = useSelector(state => ({
+	const { isAuthenticated, isAdmin } = useSelector(state => ({
 		isAuthenticated: !!state.auth.token,
 		isAdmin: state.auth.userId === 'rxSgS3FlNBb3kfoO630c8JvJB6O2',
 		user: state.user.user
