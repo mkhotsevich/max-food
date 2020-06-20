@@ -11,6 +11,7 @@ import { Navbar } from "./components/Navbar/Navbar"
 import Logout from './components/Logout/Logout'
 import { autoLogin } from './store/actions/auth'
 import { AddSpec } from './pages/AddSpec/AddSpec'
+import Footer from './components/Footer/Footer'
 
 export const App = (props) => {
 
@@ -38,14 +39,13 @@ export const App = (props) => {
 		if (isAdmin) {
 			routes = (
 				<Switch>
-					<Route path={'/profile'} component={ProfilePage} />
-					<Route path={'/adddish'} component={AddDishPage} />
-					<Route path={'/addrestaurant'} component={AddRestaurantPage} />
-					<Route path={'/addspec'} component={AddSpec} />
-					<Route path={'/restaurant/:name'} component={RestaurantPage} />
+					<Route path={'/admin/rests'} component={AddRestaurantPage} />
+					<Route path={'/admin/specs'} component={AddSpec} />
+					<Route path={'/admin/menutype'} component={AddSpec} />
+					<Route path={'/admin/orders'} component={AddSpec} />
+					<Route path={'/admin/dashboard'} component={AddSpec} />
 					<Route path={'/logout'} component={Logout} />
-					<Route path={'/'} exact component={MainPage} />
-					<Redirect to={'/'} />
+					<Redirect to={'/admin/rests'} />
 				</Switch>
 			)
 		} else {
@@ -63,10 +63,13 @@ export const App = (props) => {
 
 	return (
 		<React.Fragment>
-			<Navbar />
-			<div className={'container'}>
-				{routes}
-			</div>
+				<Navbar />
+			<main role={'main'} className={'flex-shrink-0'}>
+				<div className={'container'}>
+					{routes}
+				</div>
+			</main>
+			<Footer />
 		</React.Fragment>
 	)
 }
