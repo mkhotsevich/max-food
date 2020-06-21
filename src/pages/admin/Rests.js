@@ -105,7 +105,8 @@ const Rests = () => {
 			address: state.formControls.address.value,
 			owner: state.owner,
 			imageURL: state.formControls.imageURL.value,
-			spec: state.spec
+			spec: state.spec,
+			dishes: []
 		}
 		dispatch(createRest(restaurant))
 		dispatch(fetchRestaurants())

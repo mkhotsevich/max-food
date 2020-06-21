@@ -5,7 +5,15 @@ export function createRest(rest) {
 	return async dispatch => {
 		try {
 			await axios.post('/restaurants.json', rest)
-
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
+export function createDish(dish, id) {
+	return async dispatch => {
+		try {
+			await axios.post(`/restaurants/${id}/dishes.json`, dish)
 		} catch (error) {
 			console.log(error)
 		}
@@ -15,6 +23,16 @@ export function deleteRest(rest) {
 	return async dispatch => {
 		try {
 			await axios.delete(`/restaurants/${rest.id}.json`)
+			dispatch(fetchRestaurants())
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
+export function deleteDish(dish, id) {
+	return async dispatch => {
+		try {
+			await axios.delete(`/restaurants/${id}/dishes.json`, dish)
 			dispatch(fetchRestaurants())
 		} catch (error) {
 			console.log(error)
@@ -38,7 +56,8 @@ export function fetchRestaurants() {
 					address: restaurant.address,
 					owner: restaurant.owner,
 					imageURL: restaurant.imageURL,
-					spec: restaurant.spec
+					spec: restaurant.spec,
+					dishes: []
 				})
 			})
 			dispatch(fetchRestaurantsSuccess(restaurants))
