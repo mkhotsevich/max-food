@@ -13,7 +13,7 @@ const initialState = {
 	error: null,
 	loading: false,
 	owner: false,
-	restName: ''
+	rest: {}
 }
 export default function userReducer(state = initialState, action) {
 	switch (action.type) {
@@ -55,7 +55,7 @@ export default function userReducer(state = initialState, action) {
 			return {
 				...state,
 				owner: action.owner,
-				restName: action.restName
+				rest: action.rest
 			}
 		default:
 			return state
