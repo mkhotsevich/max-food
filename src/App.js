@@ -15,6 +15,7 @@ import Logout from './components/Logout/Logout'
 import { autoLogin } from './store/actions/auth'
 import Footer from './components/Footer/Footer'
 import Dish from './pages/Dish'
+import Cart from './pages/Cart'
 
 export const App = (props) => {
 
@@ -34,6 +35,7 @@ export const App = (props) => {
 			<Route path={'/'} exact component={MainPage} />
 			<Route path={'/auth'} component={AuthPage} />
 			<Route path={'/restaurant/:id'} component={Restaurant} />
+			<Route path={'/cart'} component={Cart} />
 			<Redirect to={'/'} />
 		</Switch>
 	)
@@ -56,7 +58,7 @@ export const App = (props) => {
 				<Switch>
 					<Route path={'/'} exact component={MainPage} />
 					<Route path={'/profile'} component={ProfilePage} />
-					<Route path={'/dish/:id'} component={Dish}/>
+					<Route path={'/dish/:id'} component={Dish} />
 					<Route path={'/restaurant/:id'} component={Restaurant} />
 					<Route path={'/logout'} component={Logout} />
 					<Redirect to={'/'} />

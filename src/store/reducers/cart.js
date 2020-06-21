@@ -1,5 +1,5 @@
 import {
-	ADD_DISH_TO_CART
+	ADD_DISH_TO_CART, DELETE_DISH_FROM_CART
 } from "../actions/actionTypes"
 
 const initialState = {
@@ -13,8 +13,12 @@ export default function cartReducer(state = initialState, action) {
 				...state,
 				dishes: [...state.dishes, action.dish]
 			}
+		case DELETE_DISH_FROM_CART:
+			state.dishes.splice(action.index, 1)
+			return {
+				...state
+			}
 		default:
 			return state
 	}
-
 }

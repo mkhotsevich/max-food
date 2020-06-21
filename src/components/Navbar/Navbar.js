@@ -72,7 +72,7 @@ export const Navbar = () => {
 						isAuthenticated ?
 							<React.Fragment>
 								<li className="nav-item">
-									<NavLink to={'/cart'} className="nav-link">Корзина: </NavLink>
+									<NavLink to={'/cart'} className="nav-link">Корзина: {cartSum()} ₽</NavLink>
 								</li>
 								<li className="nav-item">
 									<NavLink to={'/profile'} className="nav-link">Профиль</NavLink>
