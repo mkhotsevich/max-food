@@ -4,10 +4,11 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import { checkOwner } from '../../store/actions/user'
 
 export const Navbar = () => {
-	const { isAuthenticated, isAdmin, isOwner} = useSelector(state => ({
+	const { isAuthenticated, isAdmin, isOwner, restName} = useSelector(state => ({
 		isAuthenticated: !!state.auth.token,
 		isAdmin: state.auth.userId === 'rxSgS3FlNBb3kfoO630c8JvJB6O2',
-		isOwner: state.user.owner
+		isOwner: state.user.owner,
+		restName: state.user.restName
 	}), shallowEqual)
 	const dispatch = useDispatch()
 	useEffect(() => {
@@ -50,7 +51,7 @@ export const Navbar = () => {
 									<NavLink to={'/'} exact={true} className="nav-link">Рестораны</NavLink>
 								</li>
 								<li className="nav-item">
-									<NavLink to={'/'} exact={true} className="nav-link">Добавить пункт меню </NavLink>
+									<NavLink to={'/'} exact={true} className="nav-link">Добавить пункт меню в {restName}</NavLink>
 								</li>
 							</React.Fragment>
 							:

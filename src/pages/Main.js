@@ -1,10 +1,10 @@
 import React, { useEffect, Fragment, useState } from "react"
-import { Card } from '../../components/Card/Card'
-import Loader from '../../components/UI/Loader/Loader'
-import { fetchRestaurants } from '../../store/actions/restaurant'
+import { Card } from '../components/Card/Card'
+import Loader from '../components/UI/Loader/Loader'
+import { fetchRestaurants } from '../store/actions/restaurant'
 import { useDispatch, useSelector, shallowEqual } from "react-redux"
-import Input from "../../components/UI/Input/Input"
-import fetchSpecs from "../../store/actions/spec"
+import Input from "../components/UI/Input/Input"
+import fetchSpecs from "../store/actions/spec"
 
 const Main = () => {
 	const [localState, setState] = useState({

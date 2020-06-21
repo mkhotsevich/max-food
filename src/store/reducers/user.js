@@ -12,7 +12,8 @@ const initialState = {
 	users: [],
 	error: null,
 	loading: false,
-	owner: false
+	owner: false,
+	restName: ''
 }
 export default function userReducer(state = initialState, action) {
 	switch (action.type) {
@@ -53,7 +54,8 @@ export default function userReducer(state = initialState, action) {
 		case IS_OWNER:
 			return {
 				...state,
-				owner: action.owner
+				owner: action.owner,
+				restName: action.restName
 			}
 		default:
 			return state

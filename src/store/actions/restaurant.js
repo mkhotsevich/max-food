@@ -1,5 +1,5 @@
 import axios from '../../axios/axios'
-import { FETCH_RESTAURANTS_START, FETCH_RESTAURANTS_SUCCESS, FETCH_RESTAURANTS_ERROR } from './actionTypes'
+import { FETCH_RESTAURANTS_START, FETCH_RESTAURANTS_SUCCESS, FETCH_RESTAURANTS_ERROR, FETCH_REST_SUCCESS } from './actionTypes'
 
 export function createRest(rest) {
 	return async dispatch => {
@@ -45,6 +45,23 @@ export function fetchRestaurants() {
 		} catch (error) {
 			dispatch(fetchRestaurantsError(error))
 		}
+	}
+}
+export function fetchRestaurantById(id) {
+	return async dispatch => {
+		dispatch(fetchRestaurantsStart())
+		try {
+			const response = await axios.get(`/restaurants/${id}.json`)
+			dispatch(fetchRestaurantByIdSuccess(response.data))
+		} catch (error) {
+			dispatch(fetchRestaurantsError(error))
+		}
+	}
+}
+export function fetchRestaurantByIdSuccess(rest) {
+	return {
+		type: FETCH_REST_SUCCESS,
+		rest
 	}
 }
 export function fetchRestaurantsStart() {

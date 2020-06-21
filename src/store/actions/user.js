@@ -96,15 +96,16 @@ export function checkOwner() {
 		Object.values(rests).forEach(rest => {
 			Object.values(users).forEach(user => {
 				if (rest.owner === user.email && user.userId === userId) {
-					dispatch(searchOwnerSucces(true))
+					dispatch(searchOwnerSucces(true, rest.name))
 				}
 			})
 		})
 	}
 }
-export function searchOwnerSucces(isOwner) {
+export function searchOwnerSucces(isOwner, name) {
 	return {
 		type: IS_OWNER,
-		owner: isOwner
+		owner: isOwner,
+		restName: name
 	}
 }
