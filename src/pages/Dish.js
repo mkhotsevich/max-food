@@ -34,6 +34,11 @@ function createFromControls() {
 			type: 'number',
 			label: 'Цена',
 			errorMessage: 'Введите цену',
+		}, { required: true }),
+		imageURL: createControl({
+			type: 'text',
+			label: 'URL картинки',
+			errorMessage: 'Введите URL',
 		}, { required: true })
 	}
 }
@@ -111,10 +116,9 @@ const Dish = props => {
 			numberOfGrams: state.formControls.numberOfGrams.value,
 			cost: state.formControls.cost.value,
 			menutype: state.menutype,
+			imageURL: state.formControls.imageURL.value
 		}
-
 		dispatch(createDish(dish, props.match.params.id))
-		// dispatch(fetchRestaurants())
 		setState({
 			formControls: createFromControls(),
 			isFormValid: false
