@@ -3,6 +3,7 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import { fetchRestaurantById } from '../store/actions/restaurant'
 import Loader from '../components/UI/Loader/Loader'
 import Button from '../components/UI/Button/Button'
+import { addToCart } from '../store/actions/cart'
 
 const Restaurant = props => {
 	const { rest, loading } = useSelector(state => ({
@@ -31,12 +32,12 @@ const Restaurant = props => {
 								<h3 className="card-title text-center">{dish.name}</h3>
 								<h6 className="card-subtitle mb-2 text-muted">{dish.description}</h6>
 								<p className={'card-text'}>{dish.structure}</p>
-								<span class="badge badge-light">{dish.numberOfGrams} г</span>
+								<span className="badge badge-light">{dish.numberOfGrams} г</span>
 							</div>
 							<div className="card-footer bg-transparent d-flex justify-content-between align-items-center">
 								<span className={'h3'}>{dish.cost} ₽</span>
 								<Button
-									onClick={''}
+									onClick={() => addToCartHandler(dish)}
 								>
 									В корзину
 								</Button>
@@ -50,6 +51,9 @@ const Restaurant = props => {
 		}
 
 	}
+	const addToCartHandler = dish => {
+		dispatch(addToCart(dish))
+	}
 	return (
 		<Fragment>
 			{loading ?
@@ -58,7 +62,7 @@ const Restaurant = props => {
 				</div>
 				:
 				<Fragment>
-					<div div className={'row'} >
+					<div className={'row'} >
 						<h1 className={'col-12 text-center mb-3 mt-5'}>{rest.name}</h1>
 					</div >
 					<div className={'row'}>

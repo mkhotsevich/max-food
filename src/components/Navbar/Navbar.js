@@ -4,17 +4,24 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import { checkOwner } from '../../store/actions/user'
 
 export const Navbar = () => {
-	const { isAuthenticated, isAdmin, isOwner, rest} = useSelector(state => ({
+	const { isAuthenticated, isAdmin, isOwner, rest, cart } = useSelector(state => ({
 		isAuthenticated: !!state.auth.token,
 		isAdmin: state.auth.userId === 'rxSgS3FlNBb3kfoO630c8JvJB6O2',
 		isOwner: state.user.owner,
-		rest: state.user.rest
+		rest: state.user.rest,
+		cart: state.cart.dishes
 	}), shallowEqual)
 	const dispatch = useDispatch()
 	useEffect(() => {
 		dispatch(checkOwner())
 	}, [dispatch])
-
+	const cartSum = () => {
+		let sum = 0
+		cart.forEach((c) => {
+			sum = sum + +c.cost
+		})
+		return sum
+	}
 	return (
 		<nav className={'navbar navbar-expand-sm navbar-light bg-light fixed-top'} >
 			<Link to={'/'} className={'navbar-brand'}>MaxFood</Link>
@@ -65,7 +72,7 @@ export const Navbar = () => {
 						isAuthenticated ?
 							<React.Fragment>
 								<li className="nav-item">
-									<NavLink to={'/cart'} className="nav-link">Корзина: 1000 ₽</NavLink>
+									<NavLink to={'/cart'} className="nav-link">Корзина: </NavLink>
 								</li>
 								<li className="nav-item">
 									<NavLink to={'/profile'} className="nav-link">Профиль</NavLink>
@@ -77,7 +84,7 @@ export const Navbar = () => {
 							:
 							<React.Fragment>
 								<li className="nav-item">
-									<NavLink to={'/cart'} className="nav-link">Корзина: 1000 ₽</NavLink>
+									<NavLink to={'/cart'} className="nav-link">Корзина: {cartSum()} ₽</NavLink>
 								</li>
 								<li className="nav-item">
 									<NavLink to={'/auth'} className="nav-link">Авторизация</NavLink>
