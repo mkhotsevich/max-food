@@ -62,7 +62,7 @@ const Restaurant = props => {
 						<h1 className={'col-12 text-center mb-3 mt-5'}>{rest.name}</h1>
 					</div >
 					<div className={'row'}>
-						<div className={'col-12 col-md-6 mx-auto text-justify'}>
+						<div className={'col-12 col-md-6 mx-auto text-justify my-3 '}>
 							{rest.description}
 						</div>
 					</div>
