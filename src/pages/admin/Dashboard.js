@@ -21,7 +21,7 @@ const Dashboard = () => {
 				<h1 className={'col-12 text-center mb-3 mt-5'}>Дашборд</h1>
 			</div>
 			<div className={'row'}>
-				<div className={'col-12 col-md-4 mb-2'}>
+				<div className={'col-12 col-md-6 mb-2'}>
 					<div className="card" style={{ height: '200px' }}>
 						<div className="card-body">
 							<h5 className="card-title text-center">Количество ресторанов</h5>
@@ -34,17 +34,7 @@ const Dashboard = () => {
 						</div>
 					</div>
 				</div>
-				<div className={'col-12 col-md-4 mb-2'}>
-					<div className="card" style={{ height: '200px' }}>
-						<div className="card-body">
-							<h5 className="card-title text-center">Количество заказов</h5>
-							<p className="card-text align-items-center h1 h-100 d-flex flex-column justify-content-center pb-5">
-								0
-						</p>
-						</div>
-					</div>
-				</div>
-				<div className={'col-12 col-md-4 mb-2'}>
+				<div className={'col-12 col-md-6 mb-2'}>
 					<div className="card" style={{ height: '200px' }}>
 						<div className="card-body">
 							<h5 className="card-title text-center">Количество клиентов</h5>

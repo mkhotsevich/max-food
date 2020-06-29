@@ -45,9 +45,6 @@ export const Navbar = () => {
 								<NavLink to={'/admin/menutype'} exact={true} className="nav-link">Типы пунктов меню</NavLink>
 							</li>
 							<li className="nav-item">
-								<NavLink to={'/admin/orders'} exact={true} className="nav-link">Заказы</NavLink>
-							</li>
-							<li className="nav-item">
 								<NavLink to={'/admin/dashboard'} exact={true} className="nav-link">Дашборд</NavLink>
 							</li>
 						</React.Fragment>
@@ -73,9 +70,6 @@ export const Navbar = () => {
 							<React.Fragment>
 								<li className="nav-item">
 									<NavLink to={'/cart'} className="nav-link">Корзина: {cartSum()} ₽</NavLink>
-								</li>
-								<li className="nav-item">
-									<NavLink to={'/profile'} className="nav-link">Профиль</NavLink>
 								</li>
 								<li className="nav-item">
 									<NavLink to={'/logout'} className="nav-link">Выйти</NavLink>
