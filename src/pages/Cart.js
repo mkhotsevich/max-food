@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import Button from '../components/UI/Button/Button'
 import Input from '../components/UI/Input/Input'
-import { deleteDishFromCart, createOrder } from '../store/actions/cart'
+import { deleteDishFromCart, createOrder, clearCart } from '../store/actions/cart'
 import { createControl, validate, validateForm } from '../utils/form/formFramework'
 
 const createFromControls = () => {
@@ -64,6 +64,7 @@ const Cart = () => {
 			formControls,
 			isFormValid: validateForm(formControls)
 		})
+		
 	}
 	const renderCart = () => {
 		return cart.map((dish, index) => {
@@ -103,6 +104,7 @@ const Cart = () => {
 		setState({
 			formControls: createFromControls()
 		})
+		dispatch(clearCart())
 	}
 	const submitHandler = (event) => {
 		event.preventDefault()

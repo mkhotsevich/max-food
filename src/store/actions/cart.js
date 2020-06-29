@@ -1,4 +1,4 @@
-import { ADD_DISH_TO_CART, DELETE_DISH_FROM_CART } from './actionTypes'
+import { ADD_DISH_TO_CART, DELETE_DISH_FROM_CART, CLEAR_CART } from './actionTypes'
 import axios from '../../axios/axios'
 
 export function addToCart(dish) {
@@ -20,5 +20,10 @@ export function createOrder(order) {
 		} catch (e) {
 
 		}
+	}
+}
+export function clearCart() {
+	return {
+		type: CLEAR_CART
 	}
 }
