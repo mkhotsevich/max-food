@@ -17,10 +17,6 @@ const Input = props => {
 				value={props.value}
 				onChange={props.onChange}
 				disabled={props.disabled}
-<<<<<<< HEAD
-				required={props.mandatory}
-=======
->>>>>>> feature/refactorMain
 			/>
 			<label htmlFor={htmlFor}>{props.label}</label>
 			{isInvalid(props) && <span>{props.errorMessage}</span>}
