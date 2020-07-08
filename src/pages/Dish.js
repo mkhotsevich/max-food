@@ -54,6 +54,7 @@ const Dish = props => {
 		menutypes: state.menutypes.menutypes,
 		loading: state.restaurants.loading
 	}), shallowEqual)
+
 	const dispatch = useDispatch()
 	useEffect(() => {
 		dispatch(fetchMenuTypes())
@@ -119,6 +120,7 @@ const Dish = props => {
 			imageURL: state.formControls.imageURL.value
 		}
 		dispatch(createDish(dish, props.match.params.id))
+		dispatch(fetchRestaurantById(props.match.params.id))
 		setState({
 			formControls: createFromControls(),
 			isFormValid: false

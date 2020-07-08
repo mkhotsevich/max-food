@@ -1,4 +1,5 @@
 import axios from 'axios'
+import axiosBase from '../../axios/axios'
 import { AUTH_SUCCESS, AUTH_LOGOUT, AUTH_ERROR } from './actionTypes'
 
 export default function auth(email, password, isLogin, userType) {
@@ -14,13 +15,14 @@ export default function auth(email, password, isLogin, userType) {
 
 			const { data } = await axios.post(url, authData)
 			const { localId, expiresIn, idToken } = data
-			// if (!isLogin) {
-			// 	const user = {
-			// 		userId: localId,
-			// 		email: email
-			// 	}
-			// 	await axiosBase.post('/users.json', user)
-			// }
+			if (!isLogin) {
+				const user = {
+					userId: localId,
+					email,
+					userType
+				}
+				await axiosBase.post('/users.json', user)
+			}
 
 			const expirationDate = new Date(new Date().getTime() + expiresIn * 1000)
 
@@ -35,6 +37,7 @@ export default function auth(email, password, isLogin, userType) {
 		}
 	}
 }
+
 export function authSuccess(token, userId) {
 	return {
 		type: AUTH_SUCCESS,
@@ -42,12 +45,14 @@ export function authSuccess(token, userId) {
 		userId
 	}
 }
+
 export function authError(error) {
 	return {
 		type: AUTH_ERROR,
 		error
 	}
 }
+
 export function autoLogin() {
 	return dispatch => {
 		const token = localStorage.getItem('token')
@@ -65,6 +70,7 @@ export function autoLogin() {
 		}
 	}
 }
+
 export function autoLogout(time) {
 	return dispatch => {
 		setTimeout(() => {
@@ -72,6 +78,7 @@ export function autoLogout(time) {
 		}, time * 1000)
 	}
 }
+
 export function logout() {
 	localStorage.removeItem('token')
 	localStorage.removeItem('userId')
