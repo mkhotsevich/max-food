@@ -12,7 +12,6 @@ const createFromControls = () => {
 			type: 'text',
 			label: 'Email',
 			errorMessage: 'Введите email',
-			mandatory: false
 		}, { required: true, email: true }),
 		password: createControl({
 			type: 'password',
@@ -44,15 +43,12 @@ const AuthPage = props => {
 	}
 
 	const loginHandler = () => {
-		props.auth(
+		dispatch(auth(
 			state.formControls.email.value,
 			state.formControls.password.value,
-			true
-		)
-	}
-
-	const submitHandler = (event) => {
-		event.preventDefault()
+			true,
+			'user'
+		))
 	}
 
 	const onChangeHandler = (event, controlName) => {
@@ -94,7 +90,7 @@ const AuthPage = props => {
 		<div className={classes.AuthPage}>
 			<div>
 				<h1>Авторизация</h1>
-				<form onSubmit={submitHandler} className={classes.AuthForm}>
+				<form onSubmit={event => event.preventDefault()} className={classes.AuthForm}>
 					{renderInputs()}
 					<div>
 						<Button
@@ -107,6 +103,11 @@ const AuthPage = props => {
 						>Регистрация</Button>
 					</div>
 				</form>
+				{error &&
+					<div className="alert alert-danger mt-3" role="alert">
+						Ошибка
+					</div>
+				}
 			</div>
 		</div>
 	)

@@ -12,13 +12,15 @@ export default function authReducer(state = initialState, action) {
 			return {
 				...state,
 				token: action.token,
-				userId: action.userId
+				userId: action.userId,
+				error: null
 			}
 		case AUTH_LOGOUT:
 			return {
 				...state,
 				token: null,
-				userId: null
+				userId: null,
+				error: null
 			}
 		case AUTH_ERROR:
 			return {
