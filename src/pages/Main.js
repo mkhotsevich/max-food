@@ -7,28 +7,30 @@ import Input from "../components/UI/Input/Input"
 import fetchSpecs from "../store/actions/spec"
 
 const Main = () => {
-	const [localState, setState] = useState({
-		search: '',
-		filter: ''
-	})
+	const [search, setSearch] = useState('')
+	const [filter, setFilter] = useState('')
+
 	const { restaurants, loading, specs } = useSelector(state => ({
 		restaurants: state.restaurants.restaurants.filter(rest => {
-			return rest.name.toLowerCase().includes(localState.search.trim().toLowerCase()) &&
-				rest.spec.toLowerCase().includes(localState.filter.trim().toLowerCase())
+			return rest.name.toLowerCase().includes(search.trim().toLowerCase()) &&
+				rest.spec.toLowerCase().includes(filter.trim().toLowerCase())
 		}),
 		loading: state.restaurants.loading,
 		specs: state.specs.specs
 	}), shallowEqual)
+
 	const dispatch = useDispatch()
+
 	useEffect(() => {
 		dispatch(fetchRestaurants())
 		dispatch(fetchSpecs())
-	}, [dispatch])
+	}, [])
+
 	const renderRestaurants = () => {
 		return restaurants.map((restaurant) => {
 			return (
 				<div
-					className={`col-sm-4`}
+					className={`col-12 col-sm-6 col-md-6 col-lg-4 mb-4`}
 					key={restaurant.id}
 				>
 					<Card
@@ -41,52 +43,38 @@ const Main = () => {
 			)
 		})
 	}
-	const onChangeHandler = event => {
-		setState({
-			...localState,
-			search: event.target.value
-		})
-		console.log(restaurants)
-	}
+
 	const renderFilters = () => {
 		return specs.map((spec) => {
 			return (
 				<button
-					className={`btn btn-outline-secondary mx-2 my-2 ${spec.name === localState.filter ? 'active' : null}`}
+					className={`btn btn-outline-secondary mx-2 my-2 ${spec.name === filter ? 'active' : null}`}
 					key={spec.id}
-					onClick={() => onFilterHandler(spec.name)}
+					onClick={() => setFilter(spec.name)}
 				>
 					{spec.name}
 				</button>
 			)
 		})
 	}
-	const onFilterHandler = filter => {
-		console.log(filter)
-		setState({
-			...localState,
-			filter
-		})
-	}
+	
 	const resetFilter = () => {
-		setState({
-			...localState,
-			filter: '',
-			search: ''
-		})
+		setFilter('')
+		setSearch('')
 	}
+
 	return (
 		<Fragment>
 			<div className={'row'}>
 				<h1 className={'col-12 text-center mb-3 mt-5'}>Рестораны</h1>
 			</div>
 			<div className={'row'}>
-				<div className={'col-12 col-md-6 mx-auto mb-3 mt-3'}>
+				<div className={'col-12 col-md-6 mx-auto my-3'}>
 					<Input
-						value={localState.search}
+						value={search}
 						type={'text'}
-						placeholder={'Поиск'}
-						onChange={event => onChangeHandler(event)}
+						label={'Поиск'}
+						onChange={event => setSearch(event.target.value)}
 					/>
 				</div>
 			</div>
@@ -94,7 +82,7 @@ const Main = () => {
 				{renderFilters()}
 				<button
 					className={`btn btn-outline-danger mx-2 my-2`}
-					onClick={() => resetFilter()}
+					onClick={resetFilter}
 				>
 					Сброс
 				</button>

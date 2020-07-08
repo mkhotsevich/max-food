@@ -5,7 +5,7 @@ const Footer = () => {
 		<footer className={'footer py-3 bg-light mt-auto'}>
 			<div className={'container'}>
 				<span className={'text-muted'}>
-					Сделано Максим Хоцевичем<br />
+					Сделано Максимом Хоцевичем<br />
 					В Московском Политехе
 				</span>
 			</div>

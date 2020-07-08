@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export const Card = props => (
 	<Link
 		to={`/restaurant/${props.id}`}
-		className={'card mb-4 text-decoration-none text-body'}
+		className={'card text-decoration-none text-body'}
 	>
 		<img
 			src={props.imageURL}
