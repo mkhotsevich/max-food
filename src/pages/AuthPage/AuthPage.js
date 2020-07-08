@@ -2,47 +2,47 @@ import React, { useState } from "react"
 import classes from './AuthPage.module.css'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
-import is from 'is_js'
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import auth from '../../store/actions/auth'
+import { createControl, validate, validateForm } from '../../utils/form/formFramework'
+
+const createFromControls = () => {
+	return {
+		email: createControl({
+			type: 'text',
+			label: 'Email',
+			errorMessage: 'Введите email',
+			mandatory: false
+		}, { required: true, email: true }),
+		password: createControl({
+			type: 'password',
+			label: 'Пароль',
+			errorMessage: 'Минимальная длина пароля 6 символов'
+		}, { required: true, minLength: 6 })
+	}
+}
 
 const AuthPage = props => {
 	const [state, setState] = useState({
 		isFormValid: false,
-		formControls: {
-			email: {
-				value: '',
-				type: 'email',
-				label: 'Email',
-				errorMessage: 'Введите email',
-				valid: false,
-				touched: false,
-				validation: {
-					required: true,
-					email: true
-				}
-			},
-			password: {
-				value: '',
-				type: 'password',
-				label: 'Пароль',
-				errorMessage: 'Минимальная длина пароля 6 символов',
-				valid: false,
-				touched: false,
-				validation: {
-					required: true,
-					minLength: 6
-				}
-			}
-		}
+		formControls: createFromControls()
 	})
+
+	const { error } = useSelector(state => ({
+		error: state.auth.error
+	}))
+
+	const dispatch = useDispatch()
+
 	const registerHandler = () => {
-		props.auth(
+		dispatch(auth(
 			state.formControls.email.value,
 			state.formControls.password.value,
-			false
-		)
+			false,
+			'user'
+		))
 	}
+
 	const loginHandler = () => {
 		props.auth(
 			state.formControls.email.value,
@@ -50,44 +50,33 @@ const AuthPage = props => {
 			true
 		)
 	}
+
 	const submitHandler = (event) => {
 		event.preventDefault()
 	}
-	const validateControl = (value, validation) => {
-		if (!validation) {
-			return true
-		}
-		let isValid = true
-		if (validation.required) {
-			isValid = value.trim() !== '' && isValid
-		}
-		if (validation.email) {
-			isValid = is.email(value) && isValid
-		}
-		if (validation.minLength) {
-			isValid = value.length >= validation.minLength && isValid
-		}
-		return isValid
-	}
+
 	const onChangeHandler = (event, controlName) => {
 		const formControls = { ...state.formControls }
 		const control = { ...formControls[controlName] }
-		let isFormValid = true
+
 		control.value = event.target.value
 		control.touched = true
-		control.valid = validateControl(control.value, control.validation)
+		control.valid = validate(control.value, control.validation)
+
 		formControls[controlName] = control
-		Object.keys(formControls).forEach(name => {
-			isFormValid = formControls[name].valid && isFormValid
+
+		setState({
+			formControls,
+			isFormValid: validateForm(formControls)
 		})
-		setState({ formControls, isFormValid })
 	}
+
 	const renderInputs = () => {
 		return Object.keys(state.formControls).map((controlName, index) => {
 			const control = state.formControls[controlName]
 			return (
 				<Input
-					key={controlName + index}
+					key={index}
 					value={control.value}
 					type={control.type}
 					label={control.label}
@@ -100,6 +89,7 @@ const AuthPage = props => {
 			)
 		})
 	}
+
 	return (
 		<div className={classes.AuthPage}>
 			<div>
@@ -122,10 +112,4 @@ const AuthPage = props => {
 	)
 }
 
-function mapDispathToProps(dispatch) {
-	return {
-		auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin))
-	}
-}
-
-export default connect(null, mapDispathToProps)(AuthPage)
+export default AuthPage

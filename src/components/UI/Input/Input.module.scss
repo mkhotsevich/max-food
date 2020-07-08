@@ -1,0 +1,40 @@
+.Input {
+	position: relative;
+	padding-top: 25px;
+	width: 100%;
+	margin: 0 0 15px;
+
+	input {
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid #bebebe;
+		background-color: transparent;
+		transition: all 0.3s ease-in-out;
+
+		&:focus {
+			outline: none;
+			border-bottom: 1px solid black;
+		}
+
+		&:placeholder-shown+label {
+			opacity: 0;
+			transform: translateY(25px);
+		}
+	}
+
+	label {
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 0.3s ease-out;
+		color: black;
+	}
+
+	span {
+		color: red;
+		font-size: 12px;
+		font-weight: 100;
+	}
+}

@@ -1,0 +1,16 @@
+.AuthPage {
+	display: flex;
+	justify-content: center;
+	padding-top: 100px;
+	flex-grow: 1;
+	width: 100%;
+
+	>div {
+		width: 100%;
+		max-width: 600px;
+	}
+
+	h1 {
+		text-align: center;
+	}
+}

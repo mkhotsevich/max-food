@@ -1,30 +1,26 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import classes from './Input.module.css'
 
-function isInvalid({valid, touched, shouldValidate}) {
+function isInvalid({ valid, touched, shouldValidate }) {
 	return !valid && touched && shouldValidate
 }
 
 const Input = props => {
 	const inputType = props.type || 'text'
-	const cls = [classes.Input]
 	const htmlFor = `${inputType}-${Math.random()}`
-	if (isInvalid(props)) {
-		cls.push(classes.invalid)
-	}
 	return (
-		<div className={cls.join(' ')}>
-			<label htmlFor={htmlFor}>{props.label}</label>
+		<div className={classes.Input}>
 			<input
 				type={inputType}
 				id={htmlFor}
-				placeholder={props.placeholder}
+				placeholder={props.label}
 				value={props.value}
 				onChange={props.onChange}
 				disabled={props.disabled}
-			>
-			</input>
-			{isInvalid(props) ? <span>{props.errorMessage}</span> : null}
+				required={props.mandatory}
+			/>
+			<label htmlFor={htmlFor}>{props.label}</label>
+			{isInvalid(props) && <span>{props.errorMessage}</span>}
 		</div>
 	)
 }

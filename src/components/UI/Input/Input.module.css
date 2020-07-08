@@ -1,27 +1,45 @@
 .Input {
-	margin-bottom: 10px;
+  position: relative;
+  padding-top: 25px;
+  width: 100%;
+  margin: 0 0 15px;
 }
-.Input label {
-	display: block;
-	margin-bottom: 5px;
-	font-weight: 400;
-}
+
 .Input input {
-	font-family: 'Montserrat', sans-serif;
-	font-size: 14px;
-	display: block;
-	width: 100%;
-	padding: 5px 0;
-	border: none;
-	border-bottom: 1px solid #bebebe;
-	outline: none;
-	transition: all 300ms ease-in-out;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #bebebe;
+  background-color: transparent;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
+
+.Input input:focus {
+  outline: none;
+  border-bottom: 1px solid black;
+}
+
+.Input input:placeholder-shown + label {
+  opacity: 0;
+  -webkit-transform: translateY(25px);
+          transform: translateY(25px);
+}
+
+.Input label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  color: black;
+}
+
 .Input span {
-	color: red;
-	font-size: 12px;
-	font-weight: 100;
+  color: red;
+  font-size: 12px;
+  font-weight: 100;
 }
-.Input.invalid input {
-	border-bottom: 1px solid red;
-}
+/*# sourceMappingURL=Input.module.css.map */

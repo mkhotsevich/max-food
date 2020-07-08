@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACT,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,KAAK;EAClB,SAAS,EAAE,CAAC;EACZ,KAAK,EAAE,IAAI;CAUX;;AAfD,AAOC,SAPQ,GAOP,GAAG,CAAC;EACJ,KAAK,EAAE,IAAI;EACX,SAAS,EAAE,KAAK;CAChB;;AAVF,AAYC,SAZQ,CAYR,EAAE,CAAC;EACF,UAAU,EAAE,MAAM;CAClB",
+    "sources": [
+        "AuthPage.module.scss"
+    ],
+    "names": [],
+    "file": "AuthPage.module.css"
+}
